@@ -5,19 +5,18 @@ A comprehensive security and guardrails framework for GenAI applications in Snow
 ## Table of Contents
 
 1. [Overview](#overview)
-2. [Architecture](#architecture)
-3. [Prerequisites](#prerequisites)
-4. [Implementation Guide](#implementation-guide)
+2. [Prerequisites](#prerequisites)
+3. [Implementation Guide](#implementation-guide)
    - [Step 1: Database Setup](#step-1-database-setup)
    - [Step 2: Deploy DeBERTa Model to SPCS](#step-2-deploy-deberta-model-to-spcs)
    - [Step 3: Deploy Security Functions](#step-3-deploy-security-functions)
    - [Step 4: Configure RBAC (Optional)](#step-4-configure-rbac-optional)
-5. [Usage Guide](#usage-guide)
-6. [Testing Guide](#testing-guide)
-7. [Monitoring & Audit](#monitoring--audit)
-8. [Troubleshooting](#troubleshooting)
-9. [Cost Considerations](#cost-considerations)
-10. [References](#references)
+4. [Usage Guide](#usage-guide)
+5. [Testing Guide](#testing-guide)
+6. [Monitoring & Audit](#monitoring--audit)
+7. [Troubleshooting](#troubleshooting)
+8. [Cost Considerations](#cost-considerations)
+9. [References](#references)
 
 ---
 
@@ -33,60 +32,6 @@ This framework implements a **multi-layered defense-in-depth security approach**
 | 4 | Secure Prompt Engineering | Sandwich Defense Pattern | Protect against prompt manipulation |
 | 5 | Output Guardrails | Cortex Guard (Llama Guard 3) | Filter harmful model outputs |
 | 6 | Audit Logging | Snowflake Tables | Complete compliance trail |
-
----
-
-## Architecture
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    SECURITY PIPELINE                            │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  User Input                                                     │
-│       │                                                         │
-│       ▼                                                         │
-│  ┌─────────────────────────────────────────────┐               │
-│  │ 1. PROMPT INJECTION DETECTION               │               │
-│  │    DeBERTa Model in SPCS                    │               │
-│  │    ✓ ML-based injection detection           │               │
-│  │    ✓ 99.9%+ accuracy                        │               │
-│  └─────────────────────────────────────────────┘               │
-│       │ BLOCKED if injection detected                          │
-│       ▼                                                         │
-│  ┌─────────────────────────────────────────────┐               │
-│  │ 2. INPUT SAFETY CLASSIFICATION              │               │
-│  │    Cortex AI_FILTER                         │               │
-│  │    ✓ Secondary safety check                 │               │
-│  └─────────────────────────────────────────────┘               │
-│       │ BLOCKED if unsafe                                      │
-│       ▼                                                         │
-│  ┌─────────────────────────────────────────────┐               │
-│  │ 3. PII REDACTION                            │               │
-│  │    Cortex AI_REDACT                         │               │
-│  │    ✓ Remove names, emails, SSNs, etc.       │               │
-│  └─────────────────────────────────────────────┘               │
-│       │                                                         │
-│       ▼                                                         │
-│  ┌─────────────────────────────────────────────┐               │
-│  │ 4. SECURE PROMPT FORMATTING                 │               │
-│  │    Sandwich Defense Pattern                 │               │
-│  │    ✓ XML delimiters                         │               │
-│  │    ✓ Post-prompt safety rules               │               │
-│  └─────────────────────────────────────────────┘               │
-│       │                                                         │
-│       ▼                                                         │
-│  ┌─────────────────────────────────────────────┐               │
-│  │ 5. GUARDED LLM CALL                         │               │
-│  │    Cortex Guard (Llama Guard 3)             │               │
-│  │    ✓ Output safety filtering                │               │
-│  └─────────────────────────────────────────────┘               │
-│       │                                                         │
-│       ▼                                                         │
-│  Safe Response + Audit Log Entry                                │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
 
 ---
 
